@@ -1,4 +1,4 @@
-package com.example.rbates.rxplayground.searchapi;
+package com.example.searchapi;
 
 public class SearchResult {
     private String name;

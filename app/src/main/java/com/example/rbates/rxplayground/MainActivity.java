@@ -13,11 +13,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.rbates.rxplayground.searchapi.SearchResult;
-import com.example.rbates.rxplayground.searchapi.SearchService;
+import com.example.searchapi.SearchResult;
+import com.example.searchapi.TagSearch;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -29,6 +31,10 @@ import rx.schedulers.Schedulers;
 public class MainActivity extends ActionBarActivity {
 
     public static final String TAG = "RxPlayground";
+
+    @Inject
+    TagSearch tagSearch;
+
     @InjectView(R.id.list)
     ListView listView;
 
@@ -40,6 +46,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
+        ((RxPlaygroundApplication) getApplication()).getApplicationGraph().inject(this);
         ViewObservable.text(editText)
                 .debounce(800, TimeUnit.MILLISECONDS, Schedulers.io())
                 .map(e -> e.text.toString())
@@ -60,7 +67,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private List<SearchResult> search(String s) {
-        return SearchService.get().search(s);
+        return tagSearch.search(s);
     }
 
     @Override
