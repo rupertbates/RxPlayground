@@ -2,8 +2,6 @@ package com.example.rbates.rxplayground;
 
 import android.app.Application;
 
-import com.example.searchapi.TagSearchModule;
-
 import java.util.Arrays;
 import java.util.Collection;
 
